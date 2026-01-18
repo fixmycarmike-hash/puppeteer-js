@@ -1,0 +1,31 @@
+.bay-card {
+    background: #f9fafb;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border-left: 4px solid #10b981;
+}
+
+.bay-card.occupied {
+    border-left-color: #ef4444;
+}
+
+.bay-card.maintenance {
+    border-left-color: #f59e0b;
+}
+
+.bay-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.bay-actions button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    background: #3b82f6;
+    color: white;
+    cursor: pointer;
+    font-size: 12px;
+}

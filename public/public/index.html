@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VHICL Pro - Complete Auto Shop Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="bay-balancing.css">
+    <link rel="stylesheet" href="shop-settings.css">
+    <link rel="stylesheet" href="quote-builder.css">
+    <link rel="stylesheet" href="service-advisor-tools.css">
+    <link rel="stylesheet" href="parts-store-config.css">
+    <link rel="icon" href="favicon.ico">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+    
+    <!-- Chart.js for analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Vapi AI for phone system -->
+    <script src="https://cdn.jsdelivr.net/npm/vapi-ai@latest/dist/vapi.min.js"></script>
+    
+    <!-- jsPDF for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+        <div class="nav-brand">
+            <h1>🚗 VHICL Pro</h1>
+        </div>
+        <div class="nav-menu">
+            <button class="nav-btn" onclick="showHome()">
+                <i class="fas fa-home"></i> Home
+            </button>
+            <button class="nav-btn" onclick="showCustomers()">
+                <i class="fas fa-users"></i> Customers
+            </button>
+            <button class="nav-btn" onclick="showQuickQuote()">
+                <i class="fas fa-calculator"></i> Quick Quote
+            </button>
+            <button class="nav-btn" onclick="showVehicles()">
+                <i class="fas fa-car"></i> Vehicles
+            </button>
+            <button class="nav-btn" onclick="showTechDashboard()">
+                <i class="fas fa-wrench"></i> Tech Workflow
+            </button>
+            <button class="nav-btn" onclick="showInventory()">
+                <i class="fas fa-boxes"></i> Inventory
+            </button>
+            <button class="nav-btn" onclick="showAppointments()">
+                <i class="fas fa-calendar"></i> Appointments
+            </button>
+            <button class="nav-btn" onclick="showAIPhoneDashboard()">
+                <i class="fas fa-phone"></i> AI Phone
+            </button>
+            <button class="nav-btn" onclick="showTowing()">
+                <i class="fas fa-truck"></i> Towing
+            </button>
+            <button class="nav-btn" onclick="showReports()">
+                <i class="fas fa-chart-line"></i> Reports
+            </button>
+            <button class="nav-btn" onclick="showSettings()">
+                <i class="fas fa-cog"></i> Settings
+            </button>
+        </div>
+        <div class="nav-user">
+            <button class="nav-btn" onclick="showUserMenu()">
+                <i class="fas fa-user-circle"></i> <span id="userName">User</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content" id="mainContent">
+        <!-- Home Screen -->
+        <div id="homeScreen" class="screen active">
+            <div class="dashboard-container">
+                <div class="dashboard-header">
+                    <h2>🚗 Welcome to VHICL Pro</h2>
+                    <p>Complete Auto Shop Management System</p>
+                </div>
+                
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <div class="action-card" onclick="showQuickQuote()">
+                        <div class="action-icon">🧮</div>
+                        <h3>Quick Quote</h3>
+                        <p>Create estimates in minutes</p>
+                    </div>
+                    <div class="action-card" onclick="showCustomers()">
+                        <div class="action-icon">👥</div>
+                        <h3>Customers</h3>
+                        <p>Manage customer database</p>
+                    </div>
+                    <div class="action-card" onclick="showAppointments()">
+                        <div class="action-icon">📅</div>
+                        <h3>Appointments</h3>
+                        <p>View and schedule appointments</p>
+                    </div>
+                    <div class="action-card" onclick="showTechDashboard()">
+                        <div class="action-icon">🔧</div>
+                        <h3>Tech Workflow</h3>
+                        <p>Manage repair jobs</p>
+                    </div>
+                    <div class="action-card" onclick="showBayBalancing()">
+                        <div class="action-icon">🏗️</div>
+                        <h3>Bay Balancing</h3>
+                        <p>Manage shop bays</p>
+                    </div>
+                    <div class="action-card" onclick="showInventory()">
+                        <div class="action-icon">📦</div>
+                        <h3>Inventory</h3>
+                        <p>Track parts and supplies</p>
+                    </div>
+                    
+                    <div class="action-card" onclick="showKioskMode()">
+                        <div class="action-icon">📸</div>
+                        <h3>Kiosk Mode</h3>
+                        <p>Customer check-in</p>
+                    </div>
+                    <div class="action-card" onclick="showAIPhoneSetup()">
+                        <div class="action-icon">🤖</div>
+                        <h3>AI Phone Setup</h3>
+                        <p>Configure AI phone assistant</p>
+                    </div>
+                    <div class="action-card" onclick="showTowing()">
+                        <div class="action-icon">🚛</div>
+                        <h3>Towing</h3>
+                        <p>Manage towing services</p>
+                    </div>
+                </div>
+
+                <!-- Today's Summary -->
+                <div class="today-summary">
+                    <h3>Today's Summary</h3>
+                    <div class="summary-grid">
+                        <div class="summary-card">
+                            <div class="summary-value" id="todayAppointments">0</div>
+                            <div class="summary-label">Appointments</div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-value" id="activeJobs">0</div>
+                            <div class="summary-label">Active Jobs</div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-value" id="phoneCalls">0</div>
+                            <div class="summary-label">Phone Calls</div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-value" id="revenueToday">$0</div>
+                            <div class="summary-label">Today's Revenue</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Phone Status -->
+                <div class="ai-phone-status">
+                    <h3>🤖 AI Phone System</h3>
+                    <div class="status-grid">
+                        <div class="status-item">
+                            <span class="status-indicator" id="phoneStatus"></span>
+                            <span id="phoneStatusText">Not Configured</span>
+                        </div>
+                        <div class="status-item">
+                            <span>📞 Calls Today: <strong id="callsToday">0</strong></span>
+                        </div>
+                        <div class="status-item">
+                            <span>📅 Booked: <strong id="appointmentsBooked">0</strong></span>
+                        </div>
+                        <div class="status-item">
+                            <span>📝 Messages: <strong id="messagesTaken">0</strong></span>
+                        </div>
+                    </div>
+                    <button class="btn-primary" onclick="showAIPhoneDashboard()">
+                        View Phone Dashboard
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Other screens will be loaded dynamically -->
+    </main>
+<!-- Quote Screen -->
+    <div id="quickQuoteScreen" class="screen">
+        <div style="padding: 20px;">
+            <button class="btn" onclick="showScreen('homeScreen')" style="margin-bottom: 20px;">← Back to Home</button>
+            <h2>💰 Quick Quote Builder</h2>
+            
+            <div style="background:#eff6ff; padding:15px; border-radius:8px; margin-bottom:20px;">
+                <strong>Fast Estimate Generator</strong><br>
+                <small style="color:#64748b;">Generate professional quotes with integrated parts and labor lookup</small>
+            </div>
+            
+            <div id="quickQuoteContent">
+                <p>Loading quote builder...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tech Dashboard Screen -->
+    <div id="techWorkflowScreen" class="screen">
+        <div style="padding: 20px;">
+            <button class="btn" onclick="showHome()" style="margin-bottom: 20px;">← Back to Home</button>
+            <h2>🔧 Tech Workflow Dashboard</h2>
+            
+            <div style="margin-bottom: 20px;">
+                <h3>Active Jobs</h3>
+                <div id="tech-jobs-list">
+                    <p>Loading jobs...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bay Balancing Screen -->
+    <div id="bayBalancingScreen" class="screen">
+        <div style="padding: 20px;">
+            <button class="btn" onclick="showHome()" style="margin-bottom: 20px;">← Back to Home</button>
+            <h2>🏗️ Bay Balancing</h2>
+            <div id="bay-status-list"></div>
+        </div>
+    </div>
+
+    <!-- Inventory Screen -->
+    <div id="inventoryScreen" class="screen">
+        <div style="padding: 20px;">
+            <button class="btn" onclick="showHome()" style="margin-bottom: 20px;">← Back to Home</button>
+            <h2>📦 Inventory Management</h2>
+            
+            <div style="background:#eff6ff; padding:15px; border-radius:8px; margin-bottom:20px;">
+                <strong>AI-Powered Inventory</strong><br>
+                <small style="color:#64748b;">Track parts, get low stock alerts, and receive AI-powered reorder recommendations</small>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <button class="btn btn-primary" onclick="addInventoryPart()">+ Add Part</button>
+                <button class="btn btn-secondary" onclick="window.inventorySystem.exportInventory()">📥 Export</button>
+            </div>
+            
+            <div id="inventory-list">
+                <p>Loading inventory...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Appointments Screen -->
+    <div id="appointmentScreen" class="screen">
+        <div style="padding: 20px;">
+            <button class="btn" onclick="showHome()" style="margin-bottom: 20px;">← Back to Home</button>
+            <h2>📅 Appointments &amp; Service Advisor</h2>
+            
+            <div style="background:#eff6ff; padding:15px; border-radius:8px; margin-bottom:20px;">
+                <strong>Appointment Management</strong><br>
+                <small style="color:#64748b;">Schedule appointments, set reminders, and manage customer follow-ups</small>
+            </div>
+            
+            <div class="advisor-actions-bar" style="margin-bottom: 20px;">
+                <button class="btn btn-primary" onclick="window.advisorTools.showAddAppointmentDialog()">+ Add Appointment</button>
+                <button class="btn btn-primary" onclick="window.advisorTools.showAddReminderDialog()">+ Add Reminder</button>
+                <button class="btn btn-secondary" onclick="window.advisorTools.generateReport()">📊 Report</button>
+            </div>
+            
+            <div id="appointmentsContent">
+                <!-- Today's Appointments -->
+                <div style="background:white; padding:20px; border-radius:8px; margin-bottom:20px;">
+                    <h3>📅 Today's Appointments</h3>
+                    <div id="today-appointments"></div>
+                </div>
+                
+                <!-- Upcoming Appointments -->
+                <div style="background:white; padding:20px; border-radius:8px; margin-bottom:20px;">
+                    <h3>📆 Upcoming Appointments (Next 7 Days)</h3>
+                    <div id="upcoming-appointments"></div>
+                </div>
+                
+                <!-- Pending Reminders -->
+                <div style="background:white; padding:20px; border-radius:8px; margin-bottom:20px;">
+                    <h3>⏰ Pending Reminders</h3>
+                    <div id="reminders-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Towing Screen -->
+    <div id="towingManagementScreen" class="screen">
+        <div style="padding: 20px;">
+            <button class="btn" onclick="showHome()" style="margin-bottom: 20px;">← Back to Home</button>
+            <h2>🚨 Towing Integration</h2>
+            
+            <div style="background:#eff6ff; padding:15px; border-radius:8px; margin-bottom:20px;">
+                <strong>Towing Management System</strong><br>
+                <small style="color:#64748b;">Manage towing providers, create towing requests, and track status</small>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <button class="btn btn-primary" onclick="showAddTowingProvider()">+ Add Provider</button>
+                <button class="btn btn-primary" onclick="showRequestTowing()">🚗 Request Tow</button>
+            </div>
+            
+            <!-- Towing Providers Section -->
+            <div style="background:white; padding:20px; border-radius:8px; margin-bottom:20px;">
+                <h3>📋 Towing Providers</h3>
+                <div id="towingProvidersList">
+                    <p>Loading towing providers...</p>
+                </div>
+            </div>
+            
+            <!-- Towing Requests Section -->
+            <div style="background:white; padding:20px; border-radius:8px;">
+                <h3>🚗 Towing Requests</h3>
+                <div id="towingRequestsList">
+                    <p>Loading towing requests...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reports Screen -->
+    <div id="reportScreen" class="screen">
+        <div style="padding: 20px;">
+            <button class="btn" onclick="showHome()" style="margin-bottom: 20px;">← Back to Home</button>
+            <h2>📊 Reports &amp; Analytics</h2>
+            <div id="reportsContent">
+                <p>Loading reports...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Screen -->
+    <div id="settingsScreen" class="screen">
+        <div style="padding: 20px;">
+            <button class="btn" onclick="showHome()" style="margin-bottom: 20px;">← Back to Home</button>
+            <h2>⚙️ Shop Settings</h2>
+            <div id="settingsContent">
+                <p>Loading settings...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vehicles Screen -->
+    <div id="vehicleScreen" class="screen">
+        <div style="padding: 20px;">
+            <button class="btn" onclick="showHome()" style="margin-bottom: 20px;">← Back to Home</button>
+            <h2>🚗 Vehicle Management</h2>
+            
+            <div style="margin-bottom: 20px;">
+                <button class="btn btn-primary" onclick="showAddVehicleForm()">➕ Add Vehicle</button>
+            </div>
+            
+            <div id="vehicle-list">
+                <p>Loading vehicles...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kiosk Mode Screen -->
+    <div id="kioskScreen" class="screen">
+        <div style="padding: 40px; max-width: 600px; margin: 0 auto;">
+            <button class="btn" onclick="showHome()" style="margin-bottom: 20px;">← Exit Kiosk Mode</button>
+            
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h1>🚗 Welcome to Our Shop!</h1>
+                <h2>Customer Check-In</h2>
+                <p>Please fill out the form below to check in your vehicle</p>
+            </div>
+
+            <div id="kioskCheckInForm" style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Your Name *</label>
+                    <input type="text" id="kiosk-customer-name" placeholder="John Doe" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;" required>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Phone Number *</label>
+                    <input type="tel" id="kiosk-customer-phone" placeholder="(555) 123-4567" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;" required>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Email</label>
+                    <input type="email" id="kiosk-customer-email" placeholder="john@example.com" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;">
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Preferred Contact Method *</label>
+                    <select id="kiosk-contact-method" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;" required>
+                        <option value="">Select...</option>
+                        <option value="phone">Phone Call</option>
+                        <option value="text">Text Message</option>
+                        <option value="email">Email</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Vehicle Make *</label>
+                    <input type="text" id="kiosk-vehicle-make" placeholder="Toyota" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;" required>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Vehicle Model *</label>
+                    <input type="text" id="kiosk-vehicle-model" placeholder="Camry" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;" required>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Vehicle Year *</label>
+                    <input type="number" id="kiosk-vehicle-year" placeholder="2020" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;" required>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">License Plate</label>
+                    <input type="text" id="kiosk-license-plate" placeholder="ABC1234" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;">
+                </div>
+
+                <div style="margin-bottom: 30px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Reason for Visit *</label>
+                    <textarea id="kiosk-reason" placeholder="Describe what brings you in today..." style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px; min-height: 100px;" required></textarea>
+                </div>
+
+                <button type="button" onclick="submitKioskCheckIn(event); return false;" style="width: 100%; padding: 15px; background: #4CAF50; color: white; border: none; border-radius: 5px; font-size: 18px; font-weight: bold; cursor: pointer;">
+                    ✅ Check In
+                </button>
+
+                <div id="kiosk-success-message" style="display: none; margin-top: 20px; padding: 30px; background: #4CAF50; color: white; border-radius: 10px; text-align: center;">
+                    <h2 style="margin-bottom: 15px;">✅ Check-In Successful!</h2>
+                    <h3 style="margin-bottom: 10px;">Thank You!</h3>
+                    <p style="font-size: 18px; margin-bottom: 10px;">We've received your information.</p>
+                    <p style="font-size: 16px;">A technician will be with you shortly.</p>
+                    <p style="font-size: 14px; margin-top: 15px; opacity: 0.9;">Please have a seat in our waiting area.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customer Management Screen -->
+    <div id="customer-screen" class="screen">
+        <div class="customer-header">
+            <h2>👥 Customer Management</h2>
+            <p>Manage customers and track assessment history</p>
+        </div>
+
+        <div class="customer-actions-bar">
+            <div class="customer-search-box">
+                <input type="text" id="customer-search" placeholder="Search customers..." oninput="window.customerMgmt && window.customerMgmt.handleSearch()">
+                <span class="search-icon">🔍</span>
+            </div>
+            <button class="btn btn-primary" onclick="window.customerMgmt && window.customerMgmt.showAddCustomerForm()">
+                ➕ Add New Customer
+            </button>
+            <button class="btn" onclick="showHome()">
+                ← Back to Home
+            </button>
+        </div>
+
+        <div id="customer-list-view">
+            <div id="customer-list"></div>
+        </div>
+
+        <div id="customer-detail-view" style="display:none;">
+            <button class="btn" onclick="window.customerMgmt && window.customerMgmt.showCustomerList()">← Back to List</button>
+            <div id="customer-detail-content"></div>
+        </div>
+    </div>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+    <!-- AI Phone Setup Modal -->
+    <div id="aiPhoneSetupModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🤖 AI Phone System Setup</h2>
+                <button class="close-btn" onclick="closeAIPhoneSetup()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="setup-wizard">
+                    <div class="step active">
+                        <h3>Choose Your AI Provider</h3>
+                        <div class="provider-options">
+                            <div class="provider-card" onclick="selectProvider('vapi')">
+                                <h4>🚀 Vapi AI (Recommended)</h4>
+                                <p>Easiest setup, professional voice, $0.05/minute</p>
+                                <ul>
+                                    <li>✅ Setup in 5 minutes</li>
+                                    <li>✅ Natural conversations</li>
+                                    <li>✅ $30-50/month typical</li>
+                                </ul>
+                            </div>
+                            <div class="provider-card" onclick="selectProvider('twilio')">
+                                <h4>📞 Twilio + OpenAI</h4>
+                                <p>Most customizable, $0.06/minute</p>
+                                <ul>
+                                    <li>✅ Full control</li>
+                                    <li>✅ Custom workflows</li>
+                                    <li>✅ $40-60/month typical</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-buttons">
+                    <button class="btn-primary" onclick="continueAIPhoneSetup()">Continue</button>
+                    <button class="btn-secondary" onclick="closeAIPhoneSetup()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <p>Loading...</p>
+    </div>
+
+    <!-- Scripts -->
+    <script src="parts-store-config.js"></script>
+    <!-- Google Voice handler removed - using VAPI direct integration instead -->
+    <script src="shop-settings.js"></script>
+    <script src="missing_functions.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="firebase-auth-ui.js"></script>
+    <script src="firebase-data-helper.js"></script>
+    <script src="signature-capture.js"></script>
+    <script src="quote-customer-selector-fixed.js"></script>
+    <script src="paypal-invoice-email.js"></script>
+    <script src="quote-actions.js"></script>
+    <script src="test-invoice-conversion.js"></script>
+    <script src="multi-parts-lookup.js"></script>
+    <script src="auto-estimate-generator.js"></script>
+    <script src="ai-estimate-builder.js"></script>
+    <script src="real-ai-estimate-automation.js"></script>
+    <script src="PARTS_SOURCING_SYSTEM.js"></script>
+    <script src="ai-automated-estimate-workflow.js"></script>
+    <script src="test-quote-selector.js"></script>
+    <script src="migrate-customers-from-jobs-fixed.js"></script>
+    <script src="debug-customer-selector.js"></script>
+    <script src="inspect-tech-jobs.js"></script>
+    <script src="app.js"></script>
+    <script src="customer-management.js"></script>
+    <script src="simple-vehicle-management.js"></script>
+    <script src="vehicle-management.js"></script>
+    <script src="parts-matrix.js"></script>
+    <script src="invoice-system.js"></script>
+    <script src="invoice-health-score-patch.js"></script>
+    <script src="paypal-checkout.js"></script>
+    <script src="vapi-sync-client.js"></script>
+    <script src="automated-parts-lookup-with-sourcing.js"></script>
+    <script src="quote-actions.js"></script>
+    <script src="sales-reports.js"></script>
+    <script src="quote-builder.js"></script>
+    <script src="quote-pdf-generator.js"></script>
+    <script src="tech-workflow.js"></script>
+    <script src="tech-estimate-generator.js"></script>
+    <script src="tech-estimate-mailto.js"></script>
+    <script src="bay-balancing.js"></script>
+    <script src="inventory-system.js"></script>
+    <script src="service-advisor-tools.js"></script>
+    <script src="appointment-system.js"></script>
+    <script src="appointment-system-complete.js"></script>
+    <script src="towing-integration.js"></script>
+    <script src="reporting-system.js"></script>
+    <script src="comprehensive-reports.js"></script>
+    <script src="ai-phone-system-setup.js"></script>
+    <script src="ai-phone-integration.js"></script>
+    <script src="ai-phone-dashboard.js"></script>
+    <script src="nexpart-url-patch.js"></script>
+    <script src="firebase-sync-fix.js"></script>
+    <script src="license-fix.js"></script>
+    <script src="nexpart-search-improvement.js"></script>
+    <script src="face-recognition-checkin.js"></script>
+    <script src="fix-nexpart-url.js"></script>
+
+    <script>
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Firebase
+            if (typeof initializeFirebase === 'function') {
+                initializeFirebase();
+            }
+            
+            // Initialize main app
+            if (typeof initializeApp === 'function') {
+                initializeApp();
+            }
+            
+            // Initialize AI Phone System
+            if (typeof aiPhoneIntegration !== 'undefined') {
+                console.log('🤖 AI Phone System loading...');
+            }
+            
+            // Load today's summary
+            updateTodaySummary();
+            
+            // Update every 30 seconds
+            setInterval(updateTodaySummary, 30000);
+        });
+
+        // Navigation functions
+        function showHome() {
+            hideAllScreens();
+            document.getElementById('homeScreen').classList.add('active');
+            updateTodaySummary();
+        }
+
+        function showCustomers() {
+            hideAllScreens();
+            if (typeof showCustomerManagement === 'function') {
+                showCustomerManagement();
+            } else {
+                document.getElementById('customerScreen').classList.add('active');
+            }
+        }
+
+        function showVehicles() {
+            hideAllScreens();
+            document.getElementById('vehicleScreen').classList.add('active');
+            loadVehicleList();
+        }
+
+        function loadVehicleList() {
+            const vehicles = JSON.parse(localStorage.getItem('vehicles') || '[]');
+            const container = document.getElementById('vehicle-list');
+            
+            if (!container) return;
+            
+            if (vehicles.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #666; padding: 40px;">No vehicles yet. Vehicles will appear here when customers check in.</p>';
+                return;
+            }
+            
+            container.innerHTML = vehicles.map(vehicle => `
+                <div style="background: white; padding: 20px; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                    <h3 style="margin: 0 0 10px 0;">🚗 ${vehicle.year} ${vehicle.make} ${vehicle.model}</h3>
+                    <p style="margin: 5px 0;"><strong>License Plate:</strong> ${vehicle.licensePlate || 'N/A'}</p>
+                    <p style="margin: 5px 0;"><strong>Customer:</strong> ${vehicle.customerName || 'N/A'}</p>
+                    <p style="margin: 5px 0;"><strong>VIN:</strong> ${vehicle.vin || 'Not scanned'}</p>
+                    <p style="margin: 5px 0;"><strong>Status:</strong> <span style="background: #4CAF50; color: white; padding: 3px 10px; border-radius: 3px;">${vehicle.status || 'Active'}</span></p>
+                    <p style="margin: 5px 0; font-size: 12px; color: #666;"><strong>Added:</strong> ${new Date(vehicle.createdAt).toLocaleString()}</p>
+                </div>
+            `).join('');
+        }
+
+        function showAddVehicleForm() {
+            alert('Add Vehicle form - Feature coming soon!\n\nVehicles are automatically added when customers check in via Kiosk Mode.');
+        }
+
+        // showQuickQuote is defined in quote-builder.js
+
+        function showTechDashboard() {
+            hideAllScreens();
+            if (typeof showTechWorkflow === 'function') {
+                showTechWorkflow();
+            } else {
+                document.getElementById('techScreen').classList.add('active');
+            }
+        }
+
+        // showInventory is defined in inventory-system.js
+
+        function showAppointments() {
+            hideAllScreens();
+            document.getElementById('appointmentScreen').classList.add('active');
+            
+            // Initialize and render the advisor dashboard
+            if (window.advisorTools && typeof window.advisorTools.renderDashboard === 'function') {
+                setTimeout(() => {
+                    window.advisorTools.renderDashboard();
+                }, 100);
+            }
+        }
+
+        function showTowing() {
+            hideAllScreens();
+            if (typeof showTowingManagement === 'function') {
+                showTowingManagement();
+            } else {
+                document.getElementById('towingManagementScreen').classList.add('active');
+            }
+        }
+
+        function showReports() {
+            hideAllScreens();
+            if (typeof showReportingSystem === 'function') {
+                showReportingSystem();
+            } else {
+                document.getElementById('reportScreen').classList.add('active');
+            }
+        }
+
+        function showSettings() {
+            hideAllScreens();
+            // Call the advanced shop settings modal directly
+            if (typeof window.showShopSettings === 'function') {
+                window.showShopSettings();
+            } else if (typeof showSettingsPanel === 'function') {
+                showSettingsPanel();
+            } else {
+                document.getElementById('settingsScreen').classList.add('active');
+            }
+        }
+
+        // showAIPhoneDashboard is defined in missing_functions.js
+
+        function showAIPhoneSetup() {
+            document.getElementById('aiPhoneSetupModal').style.display = 'block';
+        }
+
+        function closeAIPhoneSetup() {
+            document.getElementById('aiPhoneSetupModal').style.display = 'none';
+        }
+
+        
+
+        function showKioskMode() {
+            hideAllScreens();
+            document.getElementById('kioskScreen').classList.add('active');
+        }
+
+        function submitKioskCheckIn(event) {
+            // Prevent form submission/page reload
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+
+            // Get form values
+            const name = document.getElementById('kiosk-customer-name').value.trim();
+            const phone = document.getElementById('kiosk-customer-phone').value.trim();
+            const email = document.getElementById('kiosk-customer-email').value.trim();
+            const contactMethod = document.getElementById('kiosk-contact-method').value;
+            const make = document.getElementById('kiosk-vehicle-make').value.trim();
+            const model = document.getElementById('kiosk-vehicle-model').value.trim();
+            const year = document.getElementById('kiosk-vehicle-year').value.trim();
+            const licensePlate = document.getElementById('kiosk-license-plate').value.trim();
+            const reason = document.getElementById('kiosk-reason').value.trim();
+
+            // Validate required fields
+            if (!name || !phone || !contactMethod || !make || !model || !year || !reason) {
+                alert('Please fill in all required fields (marked with *)');
+                return false;
+            }
+
+            const customerId = Date.now().toString();
+            const vehicleId = (Date.now() + 1).toString();
+
+            // 1. CREATE CUSTOMER RECORD
+            const customer = {
+                id: customerId,
+                name: name,
+                phone: phone,
+                email: email,
+                preferredContact: contactMethod,
+                createdAt: new Date().toISOString(),
+                notes: reason,
+                status: 'checked-in',
+                vehicleIds: [vehicleId]
+            };
+
+            // Add to customer management system using proper API
+            if (window.customerMgmt && typeof window.customerMgmt.addCustomer === 'function') {
+                window.customerMgmt.addCustomer({
+                    name: name,
+                    phone: phone,
+                    email: email,
+                    notes: `Check-in: ${reason}\nPreferred Contact: ${contactMethod}\nVehicle: ${year} ${make} ${model} (${licensePlate})`
+                }).then(() => {
+                    console.log('✅ Customer added to Customer Management');
+                }).catch(error => {
+                    console.error('Error adding customer:', error);
+                });
+            }
+
+            // 2. CREATE VEHICLE RECORD
+            const vehicle = {
+                id: vehicleId,
+                customerId: customerId,
+                customerName: name,
+                make: make,
+                model: model,
+                year: year,
+                licensePlate: licensePlate,
+                vin: '',
+                createdAt: new Date().toISOString(),
+                status: 'checked-in'
+            };
+
+            // Add to vehicle management system
+            if (window.vehicleMgmtFirebase && typeof window.vehicleMgmtFirebase.addVehicle === 'function') {
+                window.vehicleMgmtFirebase.addVehicle(vehicle).then(() => {
+                    console.log('✅ Vehicle added to Vehicle Management (IndexedDB)');
+                }).catch(error => {
+                    console.error('Error adding vehicle to IndexedDB:', error);
+                    // Fallback to localStorage
+                    const vehicles = JSON.parse(localStorage.getItem('vehicles') || '[]');
+                    vehicles.push(vehicle);
+                    localStorage.setItem('vehicles', JSON.stringify(vehicles));
+                    console.log('✅ Vehicle added to Vehicle Management (localStorage fallback)');
+                });
+            } else {
+                // Direct localStorage save if API not available
+                const vehicles = JSON.parse(localStorage.getItem('vehicles') || '[]');
+                vehicles.push(vehicle);
+                localStorage.setItem('vehicles', JSON.stringify(vehicles));
+                console.log('✅ Vehicle added to Vehicle Management (localStorage)');
+            }
+
+            // 3. CREATE TECH WORKFLOW JOB
+            const job = {
+                id: (Date.now() + 2).toString(),
+                customerId: customerId,
+                customer: {
+                    name: name,
+                    phone: phone,
+                    email: email
+                },
+                vehicleId: vehicleId,
+                vehicle: {
+                    year: year,
+                    make: make,
+                    model: model,
+                    licensePlate: licensePlate
+                },
+                reason: reason,
+                status: 'needs_diagnosis',
+                priority: 'normal',
+                createdAt: new Date().toISOString(),
+                assignedTo: 'Unassigned'
+            };
+
+            // Add to tech workflow
+            const jobs = JSON.parse(localStorage.getItem('techJobs') || '[]');
+            jobs.push(job);
+            localStorage.setItem('techJobs', JSON.stringify(jobs));
+            console.log('✅ Job added to Tech Workflow');
+
+            // Show success message
+            document.getElementById('kioskCheckInForm').style.display = 'none';
+            document.getElementById('kiosk-success-message').style.display = 'block';
+
+            // Show success message and log
+            console.log('✅ Complete check-in created:');
+            console.log('  - Customer:', customer);
+            console.log('  - Vehicle:', vehicle);
+            console.log('  - Tech Job:', job);
+            console.log('  - Data saved to Customer Management, Vehicle Management, and Tech Workflow');
+
+            // Reset form after 5 seconds
+            setTimeout(() => {
+                document.getElementById('kiosk-customer-name').value = '';
+                document.getElementById('kiosk-customer-phone').value = '';
+                document.getElementById('kiosk-customer-email').value = '';
+                document.getElementById('kiosk-contact-method').value = '';
+                document.getElementById('kiosk-vehicle-make').value = '';
+                document.getElementById('kiosk-vehicle-model').value = '';
+                document.getElementById('kiosk-vehicle-year').value = '';
+                document.getElementById('kiosk-license-plate').value = '';
+                document.getElementById('kiosk-reason').value = '';
+                document.getElementById('kioskCheckInForm').style.display = 'block';
+                document.getElementById('kiosk-success-message').style.display = 'none';
+            }, 5000);
+
+            return false;
+        }
+
+        function hideAllScreens() {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+        }
+
+        function updateTodaySummary() {
+            // Update today's summary from localStorage or Firebase
+            const today = new Date().toDateString();
+            
+            // Get appointments
+            const appointments = JSON.parse(localStorage.getItem('appointments') || '[]');
+            const todayAppointments = appointments.filter(apt => 
+                new Date(apt.date).toDateString() === today
+            );
+            document.getElementById('todayAppointments').textContent = todayAppointments.length;
+            
+            // Get active jobs
+            const jobs = JSON.parse(localStorage.getItem('jobs') || '[]');
+            const activeJobs = jobs.filter(job => 
+                ['needs_diagnosis', 'diagnosed', 'waiting_approval', 'approved', 'in_progress'].includes(job.status)
+            );
+            document.getElementById('activeJobs').textContent = activeJobs.length;
+            
+            // Get phone calls from AI system
+            if (window.aiPhoneIntegration) {
+                const phoneAnalytics = window.aiPhoneIntegration.analytics || {};
+                document.getElementById('phoneCalls').textContent = phoneAnalytics.totalCalls || 0;
+                document.getElementById('callsToday').textContent = phoneAnalytics.totalCalls || 0;
+                document.getElementById('appointmentsBooked').textContent = phoneAnalytics.appointmentsBooked || 0;
+                document.getElementById('messagesTaken').textContent = phoneAnalytics.messagesTaken || 0;
+            }
+            
+            // Calculate today's revenue
+            const completedJobs = jobs.filter(job => 
+                job.status === 'complete' && 
+                new Date(job.completedAt).toDateString() === today
+            );
+            const todayRevenue = completedJobs.reduce((sum, job) => sum + (job.total || 0), 0);
+            document.getElementById('revenueToday').textContent = `$${todayRevenue.toFixed(2)}`;
+        }
+
+        // Notification system
+        function showNotification(message, type = 'info', duration = 5000) {
+            const container = document.getElementById('notificationContainer');
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <span class="notification-message">${message}</span>
+                <button class="notification-close" onclick="this.parentElement.remove()">×</button>
+            `;
+            
+            container.appendChild(notification);
+            
+            // Auto-remove after duration
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, duration);
+        }
+
+        // Loading overlay
+        function showLoading(message = 'Loading...') {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            document.querySelector('#loadingOverlay p').textContent = message;
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+    </script>
+    
+    <!-- Appointment Form Modal -->
+    <div id="appointment-form-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:10000; align-items:center; justify-content:center;">
+        <div style="background:white; padding:30px; border-radius:12px; max-width:500px; width:90%; max-height:90vh; overflow-y:auto;">
+            <h3 style="margin-top:0;">Add Appointment</h3>
+            <form id="appointment-form" onsubmit="event.preventDefault(); window.advisorTools.saveAppointment();">
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Customer Name *</label>
+                    <input type="text" id="apt-customer-name" required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                </div>
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Date *</label>
+                    <input type="date" id="apt-date" required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                </div>
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Time *</label>
+                    <input type="time" id="apt-time" required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                </div>
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Service *</label>
+                    <input type="text" id="apt-service" placeholder="e.g., Oil Change, Brake Inspection" required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                </div>
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Notes</label>
+                    <textarea id="apt-notes" placeholder="Additional notes..." style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px; min-height:80px;"></textarea>
+                </div>
+                <div style="display:flex; gap:10px; justify-content:flex-end;">
+                    <button type="button" class="btn btn-secondary" onclick="window.advisorTools.closeAppointmentForm()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Reminder Form Modal -->
+    <div id="reminder-form-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:10000; align-items:center; justify-content:center;">
+        <div style="background:white; padding:30px; border-radius:12px; max-width:500px; width:90%; max-height:90vh; overflow-y:auto;">
+            <h3 style="margin-top:0;">Add Reminder</h3>
+            <form id="reminder-form" onsubmit="event.preventDefault(); window.advisorTools.saveReminder();">
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Customer Name *</label>
+                    <input type="text" id="rem-customer-name" required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                </div>
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Due Date *</label>
+                    <input type="date" id="rem-date" required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                </div>
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Service Type *</label>
+                    <input type="text" id="rem-service" placeholder="e.g., 6-month service reminder" required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                </div>
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Notes</label>
+                    <textarea id="rem-notes" placeholder="Additional notes..." style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px; min-height:80px;"></textarea>
+                </div>
+                <div style="display:flex; gap:10px; justify-content:flex-end;">
+                    <button type="button" class="btn btn-secondary" onclick="window.advisorTools.closeReminderForm()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Add Towing Provider Modal -->
+    <div id="addTowingProviderModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:10000; align-items:center; justify-content:center;">
+        <div style="background:white; padding:30px; border-radius:12px; max-width:600px; width:90%; max-height:90vh; overflow-y:auto;">
+            <h3 style="margin-top:0;">Add/Edit Towing Provider</h3>
+            <form id="towingProviderForm" onsubmit="event.preventDefault(); saveTowingProvider();">
+                <input type="hidden" id="towingProviderId">
+                
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Provider Name *</label>
+                    <input type="text" id="providerName" required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                </div>
+                
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Phone *</label>
+                    <input type="tel" id="providerPhone" required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                </div>
+                
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Email</label>
+                    <input type="email" id="providerEmail" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                </div>
+                
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Address</label>
+                    <input type="text" id="providerAddress" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                </div>
+                
+                <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:15px;">
+                    <div>
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">City</label>
+                        <input type="text" id="providerCity" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">State</label>
+                        <input type="text" id="providerState" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">ZIP</label>
+                        <input type="text" id="providerZip" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                    </div>
+                </div>
+                
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Notes</label>
+                    <textarea id="providerNotes" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px; min-height:80px;"></textarea>
+                </div>
+                
+                <div style="display:flex; gap:10px; justify-content:flex-end;">
+                    <button type="button" class="btn btn-secondary" onclick="closeAddTowingProviderModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Provider</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Request Towing Modal -->
+    <div id="requestTowingModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:10000; align-items:center; justify-content:center;">
+        <div style="background:white; padding:30px; border-radius:12px; max-width:700px; width:90%; max-height:90vh; overflow-y:auto;">
+            <h3 style="margin-top:0;">Request Towing Service</h3>
+            <form id="towingRequestForm" onsubmit="event.preventDefault(); submitTowingRequest();">
+                
+                <h4 style="margin-top:20px; margin-bottom:10px; color:#3b82f6;">Customer Information</h4>
+                <input type="hidden" id="towingCustomerId">
+                
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Customer Name *</label>
+                    <input type="text" id="towingCustomerName" required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                </div>
+                
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Customer Phone *</label>
+                    <input type="tel" id="towingCustomerPhone" required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                </div>
+                
+                <h4 style="margin-top:20px; margin-bottom:10px; color:#3b82f6;">Vehicle Information</h4>
+                
+                <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:15px;">
+                    <div>
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Year *</label>
+                        <input type="text" id="towingVehicleYear" required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Make *</label>
+                        <input type="text" id="towingVehicleMake" required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Model *</label>
+                        <input type="text" id="towingVehicleModel" required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                    </div>
+                </div>
+                
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:15px;">
+                    <div>
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Color</label>
+                        <input type="text" id="towingVehicleColor" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">License Plate</label>
+                        <input type="text" id="towingVehiclePlate" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                    </div>
+                </div>
+                
+                <h4 style="margin-top:20px; margin-bottom:10px; color:#3b82f6;">Pickup Location</h4>
+                
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Address *</label>
+                    <input type="text" id="towingPickupAddress" required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                </div>
+                
+                <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:15px;">
+                    <div>
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">City *</label>
+                        <input type="text" id="towingPickupCity" required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">State *</label>
+                        <input type="text" id="towingPickupState" required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">ZIP *</label>
+                        <input type="text" id="towingPickupZip" required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                    </div>
+                </div>
+                
+                <h4 style="margin-top:20px; margin-bottom:10px; color:#3b82f6;">Towing Details</h4>
+                
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Select Towing Provider *</label>
+                    <select id="towingProviderSelect" required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                        <option value="">Select a provider...</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Issue/Reason *</label>
+                    <input type="text" id="towingIssue" required placeholder="e.g., Won't start, Flat tire, Accident" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                </div>
+                
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Special Instructions</label>
+                    <textarea id="towingSpecialInstructions" placeholder="Any special instructions for the tow truck driver..." style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px; min-height:80px;"></textarea>
+                </div>
+                
+                <div style="display:flex; gap:10px; justify-content:flex-end;">
+                    <button type="button" class="btn btn-secondary" onclick="closeRequestTowingModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Submit Request</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

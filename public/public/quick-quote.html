@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Quote - VHICL Pro</title>
+    <link rel="stylesheet" href="quick-quote-styles.css">
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🚗 VHICL Pro Quick Quote</h1>
+            <p class="subtitle">Get an instant estimate or let ALEX call you with live pricing!</p>
+        </header>
+
+        <form id="quickQuoteForm" class="quote-form">
+            <!-- Vehicle Information -->
+            <section class="form-section">
+                <h2>🚙 Vehicle Information</h2>
+                <div class="form-group">
+                    <label for="make">Make *</label>
+                    <input type="text" id="make" name="make" required placeholder="e.g., Toyota">
+                </div>
+                <div class="form-group">
+                    <label for="model">Model *</label>
+                    <input type="text" id="model" name="model" required placeholder="e.g., Camry">
+                </div>
+                <div class="form-group">
+                    <label for="year">Year *</label>
+                    <input type="number" id="year" name="year" required min="1990" max="2026" placeholder="e.g., 2020">
+                </div>
+                <div class="form-group">
+                    <label for="vin">VIN (Optional)</label>
+                    <input type="text" id="vin" name="vin" placeholder="Vehicle Identification Number">
+                </div>
+            </section>
+
+            <!-- Service Information -->
+            <section class="form-section">
+                <h2>🔧 Service Needed</h2>
+                <div class="form-group">
+                    <label for="service">Service Type *</label>
+                    <select id="service" name="service" required>
+                        <option value="">Select a service...</option>
+                        <option value="oil-change">Oil Change</option>
+                        <option value="brake-pads">Brake Pads Replacement</option>
+                        <option value="brake-rotors">Brake Rotors Replacement</option>
+                        <option value="battery">Battery Replacement</option>
+                        <option value="alternator">Alternator Replacement</option>
+                        <option value="starter">Starter Replacement</option>
+                        <option value="water-pump">Water Pump Replacement</option>
+                        <option value="timing-belt">Timing Belt Replacement</option>
+                        <option value="spark-plugs">Spark Plugs Replacement</option>
+                        <option value="coolant-flush">Coolant Flush</option>
+                        <option value="transmission-service">Transmission Service</option>
+                        <option value="ac-repair">AC Repair</option>
+                        <option value="suspension">Suspension Repair</option>
+                        <option value="exhaust">Exhaust System</option>
+                        <option value="other">Other (Describe below)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="description">Additional Details</label>
+                    <textarea id="description" name="description" rows="3" placeholder="Describe any symptoms or additional details..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="urgency">Urgency</label>
+                    <select id="urgency" name="urgency">
+                        <option value="normal">Normal</option>
+                        <option value="urgent">Urgent</option>
+                        <option value="emergency">Emergency</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- Contact Information -->
+            <section class="form-section">
+                <h2>📞 Contact Information</h2>
+                <div class="form-group">
+                    <label for="name">Full Name *</label>
+                    <input type="text" id="name" name="name" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" name="phone" required placeholder="(555) 123-4567">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required placeholder="john@example.com">
+                </div>
+            </section>
+
+            <!-- Action Buttons -->
+            <section class="form-section action-buttons">
+                <h2>Get Your Quote</h2>
+                
+                <!-- AI Phone Live Estimate - PRIMARY BUTTON -->
+                <button type="button" id="aiPhoneEstimateBtn" class="btn btn-primary ai-button">
+                    <span class="btn-icon">🤖</span>
+                    <span class="btn-text">Get AI Phone Live Estimate</span>
+                    <span class="btn-subtext">ALEX will call you in 5-10 minutes</span>
+                </button>
+
+                <div class="or-divider">
+                    <span>OR</span>
+                </div>
+
+                <!-- Manual Quote Request -->
+                <button type="submit" id="manualQuoteBtn" class="btn btn-secondary">
+                    <span class="btn-icon">📝</span>
+                    <span class="btn-text">Submit for Manual Review</span>
+                </button>
+
+                <p class="info-text">
+                    <small>
+                        💡 <strong>AI Phone Live Estimate:</strong> ALEX (our AI assistant) will call 
+                        local parts stores to get real-time pricing and call you with an accurate 
+                        estimate within 5-10 minutes. <br><br>
+                        📝 <strong>Manual Review:</strong> We'll review your request and send you 
+                        an estimate within 24 hours.
+                    </small>
+                </p>
+            </section>
+        </form>
+
+        <!-- Status Display (Hidden by default) -->
+        <div id="statusDisplay" class="status-display hidden">
+            <div class="status-content">
+                <div id="statusIcon" class="status-icon"></div>
+                <div id="statusMessage" class="status-message"></div>
+                <div id="statusDetails" class="status-details"></div>
+                <div id="statusActions" class="status-actions"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="quick-quote.js"></script>
+</body>
+</html>

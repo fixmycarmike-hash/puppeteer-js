@@ -1,0 +1,495 @@
+/**
+ * Photo Documentation System Styles
+ */
+
+/* Photo Screen Container */
+#photo-screen {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #f5f5f5;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+/* Photo Header */
+.photo-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.photo-header h2 {
+    margin: 0 0 10px 0;
+    font-size: 24px;
+}
+
+.photo-header p {
+    margin: 0;
+    opacity: 0.9;
+    font-size: 14px;
+}
+
+/* Photo Actions */
+.photo-actions {
+    display: flex;
+    gap: 10px;
+    padding: 15px;
+    background: white;
+    border-bottom: 1px solid #e0e0e0;
+    flex-wrap: wrap;
+}
+
+.photo-actions button {
+    flex: 1;
+    min-width: 150px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.photo-actions button.primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.photo-actions button.secondary {
+    background: #f0f0f0;
+    color: #333;
+}
+
+.photo-actions button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Camera Container */
+#camera-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 1001;
+}
+
+#camera-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.camera-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.camera-controls select {
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid white;
+    background: rgba(255,255,255,0.9);
+    font-size: 16px;
+    color: #333;
+}
+
+.camera-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.camera-buttons button {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.camera-buttons button.capture {
+    background: white;
+    color: #333;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    font-size: 24px;
+}
+
+.camera-buttons button.done {
+    background: #4CAF50;
+    color: white;
+}
+
+.camera-buttons button:active {
+    transform: scale(0.95);
+}
+
+/* Photo Gallery Container */
+#photo-gallery-container {
+    padding: 20px;
+}
+
+.gallery-stats {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.gallery-stats h3 {
+    margin: 0 0 5px 0;
+    color: #667eea;
+}
+
+/* Photo Category Section */
+.photo-category-section {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.photo-category-section h3 {
+    margin: 0 0 15px 0;
+    color: #333;
+    font-size: 18px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #667eea;
+}
+
+/* Photo Grid */
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+@media (max-width: 768px) {
+    .photo-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 10px;
+    }
+}
+
+/* Photo Item */
+.photo-item {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s;
+}
+
+.photo-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+.photo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.photo-delete-btn,
+.photo-annotate-btn {
+    position: absolute;
+    top: 8px;
+    padding: 8px;
+    background: rgba(0,0,0,0.7);
+    border: none;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.3s;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.photo-delete-btn {
+    right: 8px;
+}
+
+.photo-annotate-btn {
+    right: 52px;
+}
+
+.photo-item:hover .photo-delete-btn,
+.photo-item:hover .photo-annotate-btn {
+    opacity: 1;
+}
+
+.photo-delete-btn:hover {
+    background: #f44336;
+}
+
+.photo-annotate-btn:hover {
+    background: #2196F3;
+}
+
+/* Photo Viewer */
+#photo-viewer {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.95);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+}
+
+#viewer-image {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+}
+
+.viewer-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+/* Annotation Container */
+#annotation-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.95);
+    z-index: 2001;
+    flex-direction: column;
+}
+
+.annotation-header {
+    background: #333;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.annotation-header h3 {
+    color: white;
+    margin: 0;
+}
+
+.annotation-tools {
+    display: flex;
+    gap: 10px;
+    padding: 15px;
+    background: #444;
+    flex-wrap: wrap;
+}
+
+.annotation-tools button {
+    padding: 10px 20px;
+    border: 2px solid #666;
+    background: #555;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.annotation-tools button:hover,
+.annotation-tools button.active {
+    background: #667eea;
+    border-color: #667eea;
+}
+
+.annotation-tools input[type="color"] {
+    width: 50px;
+    height: 40px;
+    border: 2px solid #666;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.annotation-canvas-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+    padding: 20px;
+}
+
+#annotation-canvas {
+    max-width: 100%;
+    max-height: 100%;
+    cursor: crosshair;
+    background: white;
+}
+
+.annotation-actions {
+    padding: 15px;
+    background: #333;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.annotation-actions button {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.annotation-actions button.save {
+    background: #4CAF50;
+    color: white;
+}
+
+.annotation-actions button.cancel {
+    background: #666;
+    color: white;
+}
+
+.annotation-actions button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* Empty State */
+.photo-empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+}
+
+.photo-empty-state .icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+}
+
+.photo-empty-state h3 {
+    font-size: 24px;
+    margin: 0 0 10px 0;
+    color: #666;
+}
+
+.photo-empty-state p {
+    font-size: 16px;
+    margin: 0;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    .photo-header h2 {
+        font-size: 20px;
+    }
+    
+    .photo-actions {
+        flex-direction: column;
+    }
+    
+    .photo-actions button {
+        width: 100%;
+        min-width: auto;
+    }
+    
+    .camera-controls {
+        padding: 15px;
+    }
+    
+    .camera-buttons button.capture {
+        width: 70px;
+        height: 70px;
+        font-size: 20px;
+    }
+    
+    .annotation-tools {
+        justify-content: center;
+    }
+    
+    .annotation-tools button {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+}
+
+/* Loading Indicator */
+.photo-loading {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 20px 40px;
+    border-radius: 8px;
+    font-size: 18px;
+    z-index: 3000;
+}
+
+/* Success Message */
+.photo-success {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #4CAF50;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-size: 16px;
+    z-index: 3000;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translate(-50%, -100%);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+}
